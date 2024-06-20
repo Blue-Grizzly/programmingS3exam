@@ -56,8 +56,8 @@ public class AthleteController {
     @DeleteMapping(path = "/{id}")
     public ResponseEntity deleteAthlete(@PathVariable int id) {
         try {
-            athleteService.deleteAthlete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+
+            return new ResponseEntity<>("Success!",HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

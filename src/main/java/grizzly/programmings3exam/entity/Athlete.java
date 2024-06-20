@@ -16,9 +16,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Athlete {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +24,31 @@ public class Athlete {
     private String gender;
     private Date birthDate;
     private String club;
-    @OneToMany(mappedBy = "athlete", cascade = CascadeType.ALL)
-    private List<Result> results;
+
     @ManyToMany
     private List<Discipline> disciplines;
+
+
+    @OneToMany(mappedBy = "athlete", cascade = CascadeType.ALL)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    private List<Result> results;
+
+    public void addResult(Result result) {
+        results.add(result);
+        result.setAthlete(this);
+    }
+
+    public void removeResult(Result result) {
+        results.remove(result);
+        result.setAthlete(null);
+    }
+
+    public void addDiscipline(Discipline discipline) {
+        disciplines.add(discipline);
+    }
+
+    public void removeDiscipline(Discipline discipline) {
+        disciplines.remove(discipline);
+        discipline.getAthletes().remove(this);
+    }
 }

@@ -1,6 +1,7 @@
 package grizzly.programmings3exam.service;
 
 import grizzly.programmings3exam.Dto.ResultDto;
+import grizzly.programmings3exam.entity.Athlete;
 import grizzly.programmings3exam.entity.Result;
 import grizzly.programmings3exam.repo.AthleteRepository;
 import grizzly.programmings3exam.repo.DisciplineRepository;
@@ -32,19 +33,22 @@ final DisciplineRepository disciplineRepository;
     }
 
 
+@Transactional
     public Result addResult(ResultDto result) {
         Result newResult = new Result();
+        Athlete athlete = athleteRepository.findById(result.getAthleteId()).orElseThrow(()->new RuntimeException("No athlete found with provided id"));
+        athlete.addResult(newResult);
+        newResult.setAthlete(athlete); // Set the Athlete in the Result
         changeResult(newResult, result);
         return resultRepository.save(newResult);
     }
-
-    private void changeResult(Result original, ResultDto result) {
+    public void changeResult(Result original, ResultDto result) {
         original.setDiscipline(disciplineRepository.findById(result.getDisciplineId()).orElseThrow(()->new RuntimeException("No discipline found with provided id")));
-        original.setAthlete(athleteRepository.findById(result.getAthleteId()).orElseThrow(()->new RuntimeException("No athlete found with provided id")));
         original.setResultType(result.getResultType());
         original.setResultValue(result.getResultValue());
         original.setDate(result.getDate());
     }
+
     public Result updateResult(ResultDto result, int id) {
         Result existingResult = resultRepository.findById(id).orElseThrow(()->new RuntimeException("No result found with provided id"));
         changeResult(existingResult, result);
@@ -57,3 +61,4 @@ final DisciplineRepository disciplineRepository;
     }
 
 }
+

@@ -1,9 +1,11 @@
 package grizzly.programmings3exam.service;
 
 import grizzly.programmings3exam.entity.Athlete;
+import grizzly.programmings3exam.entity.Discipline;
 import grizzly.programmings3exam.repo.AthleteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,15 +26,25 @@ public class AthleteService {
 
     public Athlete addAthlete(Athlete athlete) {
         Athlete newAthlete = new Athlete();
+        List<Discipline> list = new ArrayList();
+        newAthlete.setDisciplines(list);
         changeAthlete(newAthlete, athlete);
         return athleteRepository.save(newAthlete);
     }
 
     private void changeAthlete(Athlete original, Athlete athlete) {
+        if(original.getDisciplines() != null && !original.getDisciplines().isEmpty()){
+            for (int i = 0; i < original.getDisciplines().size(); i++) {
+                original.removeDiscipline(original.getDisciplines().get(i));
+            }
+        }
         original.setName(athlete.getName());
         original.setGender(athlete.getGender());
         original.setBirthDate(athlete.getBirthDate());
         original.setClub(athlete.getClub());
+        for (int i = 0; i < athlete.getDisciplines().size(); i++) {
+         original.addDiscipline(athlete.getDisciplines().get(i));
+        }
     }
 
 
