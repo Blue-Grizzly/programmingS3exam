@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,6 +41,7 @@ public class AthleteIntegrationTest {
         athlete.setBirthDate(new Date());
         athlete.setGender("Male");
         athlete.setId(1);
+        athlete.setDisciplines(new ArrayList<>());
 
         athleteService.addAthlete(athlete);
 
@@ -53,7 +55,7 @@ public class AthleteIntegrationTest {
     public void addAthlete() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/athletes")
-                        .content("{\"name\":\"John Doe\",\"club\":\"Club\",\"birthDate\":\"2000-01-01\",\"gender\":\"Male\"}")
+                        .content("{\"name\":\"John Doe\",\"club\":\"Club\",\"birthDate\":\"2000-01-01\",\"gender\":\"Male\",\"disciplines\":[]}")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isCreated());
@@ -65,12 +67,13 @@ public class AthleteIntegrationTest {
         athlete.setClub("Club");
         athlete.setBirthDate(new Date());
         athlete.setGender("Male");
+        athlete.setDisciplines(new ArrayList<>());
         athlete.setId(2);
 
         athleteService.addAthlete(athlete);
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/athletes/{id}", athlete.getId())
-                        .content("{\"name\":\"John Doe\",\"club\":\"Club\",\"birthDate\":\"2000-01-01\",\"gender\":\"Male\"}")
+                        .content("{\"name\":\"John Doe\",\"club\":\"Club\",\"birthDate\":\"2000-01-01\",\"gender\":\"Male\",\"disciplines\":[]}")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk());
@@ -83,6 +86,7 @@ public class AthleteIntegrationTest {
         athlete.setClub("Club");
         athlete.setBirthDate(new Date());
         athlete.setGender("Male");
+        athlete.setDisciplines(new ArrayList<>());
         athlete.setId(1);
         athleteService.addAthlete(athlete);
         mockMvc.perform(MockMvcRequestBuilders

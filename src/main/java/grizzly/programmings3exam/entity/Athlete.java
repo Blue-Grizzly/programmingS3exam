@@ -1,5 +1,6 @@
 package grizzly.programmings3exam.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
@@ -31,6 +32,7 @@ public class Athlete {
 
     @OneToMany(mappedBy = "athlete", cascade = CascadeType.ALL)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonBackReference
     private List<Result> results;
 
     public void addResult(Result result) {

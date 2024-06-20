@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,11 +47,27 @@ public class ResultIntegrationTest {
 
     @Test
     public void getResultById() throws Exception {
-        Result result = new Result();
+        ResultDto result = new ResultDto();
         result.setId(1);
         result.setResultType("Time");
         result.setResultValue("10.0");
         result.setDate("2021-01-01");
+        result.setAthleteId(1);
+        result.setDisciplineId(1);
+
+        Athlete athlete = new Athlete();
+        athlete.setId(1);
+        athlete.setName("John Doe");
+        athlete.setClub("Club");
+        athlete.setBirthDate(new Date());
+        athlete.setDisciplines(new ArrayList<>());
+
+        Discipline discipline = new Discipline();
+        discipline.setId(1);
+        discipline.setName("Discipline");
+        discipline.setResultType("Time");
+
+        resultService.addResult(result);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/results/{id}", 1)
@@ -66,6 +83,7 @@ public class ResultIntegrationTest {
         athlete.setClub("Club");
         athlete.setBirthDate(new Date());
         athlete.setGender("Male");
+        athlete.setDisciplines(new ArrayList<>());
         athleteService.addAthlete(athlete);
 
         Discipline discipline = new Discipline();
@@ -95,6 +113,7 @@ public class ResultIntegrationTest {
         athlete.setClub("Club");
         athlete.setBirthDate(new Date());
         athlete.setGender("Male");
+        athlete.setDisciplines(new ArrayList<>());
         athleteService.addAthlete(athlete);
 
         Discipline discipline = new Discipline();
@@ -130,6 +149,7 @@ public class ResultIntegrationTest {
         athlete.setClub("Club");
         athlete.setBirthDate(new Date());
         athlete.setGender("Male");
+        athlete.setDisciplines(new ArrayList<>());
         athleteService.addAthlete(athlete);
 
         Discipline discipline = new Discipline();

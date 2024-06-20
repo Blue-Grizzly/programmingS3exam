@@ -38,7 +38,7 @@ final DisciplineRepository disciplineRepository;
         Result newResult = new Result();
         Athlete athlete = athleteRepository.findById(result.getAthleteId()).orElseThrow(()->new RuntimeException("No athlete found with provided id"));
         athlete.addResult(newResult);
-        newResult.setAthlete(athlete); // Set the Athlete in the Result
+        newResult.setAthlete(athlete);
         changeResult(newResult, result);
         return resultRepository.save(newResult);
     }

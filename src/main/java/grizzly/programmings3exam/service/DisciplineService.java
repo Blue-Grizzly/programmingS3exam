@@ -23,6 +23,7 @@ public class DisciplineService {
     }
 
     public Discipline addDiscipline(Discipline discipline) {
+        if(discipline == null) throw new RuntimeException("Discipline cannot be null");
         return disciplineRepository.save(discipline);
     }
 
