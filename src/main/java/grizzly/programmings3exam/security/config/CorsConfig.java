@@ -15,8 +15,7 @@ public class CorsConfig {
     private static final String[] ALLOWED_ORIGINS = new String[] {
             "*",
             "http://localhost:5173",
-            "http://localhost:4173",
-            "https://blue-grizzly.github.io/*"
+            "http://localhost:4173"
     };
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

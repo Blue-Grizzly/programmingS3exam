@@ -34,17 +34,6 @@ public class UserWithRolesService {
     }
   }
 
-  //Should be set in application.properties, this is mainly for testing
-  public void setDefaultRoleName(String defaultRoleName) {
-    this.defaultRoleName = defaultRoleName;
-    if (defaultRoleName == null) {
-      roleToAssign = null;
-    } else {
-      roleToAssign = roleRepository.findById(defaultRoleName).orElse(null);
-    }
-  }
-
-
   public UserWithRolesService(UserWithRolesRepository userWithRolesRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
     this.userWithRolesRepository = userWithRolesRepository;
     this.roleRepository = roleRepository;
@@ -85,6 +74,7 @@ public class UserWithRolesService {
    * @return the user added
    */
   public UserWithRolesResponse addUserWithRoles(UserWithRolesRequest body) {
+    System.out.println(body);
     if (userWithRolesRepository.existsById(body.getUsername())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user name is taken");
     }

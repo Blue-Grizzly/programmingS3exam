@@ -18,7 +18,7 @@ public class Discipline {
     private int id;
     private String name;
     private String resultType;
-    @OneToMany(mappedBy = "discipline")
+    @OneToMany(mappedBy = "discipline", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Result> results;
     @ManyToMany

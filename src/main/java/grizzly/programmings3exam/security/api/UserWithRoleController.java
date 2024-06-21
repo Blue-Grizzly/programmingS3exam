@@ -20,6 +20,7 @@ public class UserWithRoleController {
   //Anonymous users can call this.
   @PostMapping
   public UserWithRolesResponse addUserWithRoles(@RequestBody UserWithRolesRequest request) {
+    System.out.println(request);
     return userWithRolesService.addUserWithRoles(request);
   }
 
